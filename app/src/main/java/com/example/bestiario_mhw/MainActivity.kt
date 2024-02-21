@@ -56,7 +56,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
 
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +106,8 @@ fun BestiarioApp() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestiarioTopAppBar(modifier: Modifier = Modifier){
-    CenterAlignedTopAppBar(
+    CenterAlignedTopAppBar(//modifier.size(R.dimen.size_alto_barra),
+
         title = {
             Row(modifier
                     .fillMaxWidth(),
@@ -122,7 +122,7 @@ fun BestiarioTopAppBar(modifier: Modifier = Modifier){
                 //Spacer(modifier = Modifier.weight(1f))
                 Image(
                     modifier = Modifier
-                        .padding(dimensionResource(id = R.dimen.size_minimum)),
+                        .size(80.dp),
                     painter = painterResource(id = R.drawable.monster_hunter_logo),
                     contentDescription = null)
             }
@@ -137,7 +137,7 @@ fun MonsterCard(
     monster: Monster,
     modifier: Modifier
 ){
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(true) }
     val color by animateColorAsState(
         targetValue = if (expanded) MaterialTheme.colorScheme.tertiaryContainer
         else MaterialTheme.colorScheme.primaryContainer,
@@ -155,8 +155,11 @@ fun MonsterCard(
 
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
-                MonsterAvatar()
+            Row (
+                modifier,
+                verticalAlignment = Alignment.CenterVertically,
+            ){
+                MonsterAvatar(monster.avatarResourceId)
                 Spacer(modifier = Modifier.weight(1f))
                 InfoBase(monster = monster)
                 Spacer(modifier = Modifier.weight(5f))
@@ -201,30 +204,30 @@ fun InfoBase(monster: Monster) {
 @Composable
 fun MonsterImage(@DrawableRes imageResId: Int) {
     Image(
+
         painter = painterResource(id = imageResId),
         contentDescription = null,
         modifier = Modifier
-            //.padding(8.dp)
-            .size(dimensionResource(R.dimen.image_size))
-            .padding(dimensionResource(R.dimen.padding_small))
-            .clip(MaterialTheme.shapes.small)
+            .width(dimensionResource(R.dimen.image_size))
+            //.padding(dimensionResource(R.dimen.padding_small))
+            .clip(MaterialTheme.shapes.large)
 
     )
 }
 
 @Composable
-fun MonsterAvatar(
-    /*@DrawableRes imageResId: Int*/
+fun MonsterAvatar(@DrawableRes avatarResourceId: Int
     ) {
 
     Image(
-        painter = painterResource(id = R.drawable.rathian_av),
+        painter = painterResource(id = avatarResourceId),
         contentDescription = null,
         modifier = Modifier
             //.padding(8.dp)
+
             .size(dimensionResource(R.dimen.size_minimum))
             .padding(dimensionResource(R.dimen.padding_small))
-            .clip(MaterialTheme.shapes.small)
+            .clip(MaterialTheme.shapes.small),
 
     )
 }
@@ -275,7 +278,7 @@ fun infoOculta(
     monster: Monster,
     modifier: Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(true) }
     val color by animateColorAsState(
         targetValue = if (expanded) MaterialTheme.colorScheme.tertiaryContainer
         else MaterialTheme.colorScheme.primaryContainer
@@ -285,7 +288,7 @@ fun infoOculta(
         modifier = modifier
             .animateContentSize(
                 animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioNoBouncy,
+                    dampingRatio = Spring.DampingRatioHighBouncy,
                     stiffness = Spring.StiffnessMedium
                 )
             )

@@ -2,9 +2,9 @@
     <string name="app_name">Bestiario</string>
     <string name="Descripcion">Descripción</string>
     <string name="expand_button_content_description">Botón: Mostrar Más</string>
-    <string name="tipo_volador">Wyvern Volador</string>
-    <string name="tipo_nadador">Wyvern Nadador</string>
-    <string name="tipo_anciano">Dragón Anciano</string>
+    <string name="tipo_volador">Tipo: Wyvern Volador</string>
+    <string name="tipo_nadador">Tipo: Wyvern Nadador</string>
+    <string name="tipo_anciano">Tipo: Dragón Anciano</string>
 
     <string name="Rathian">Rathian</string>
     <string name="Rathian_Descripcion">Wyverns conocidas como "reinas de la tierra". Depredadoras terrestres que dominan a sus presas con su cola venenosa y poderosas patas.</string>
