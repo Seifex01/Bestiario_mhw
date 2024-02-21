@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -48,12 +50,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.bestiario_mhw.model.Monster
-import com.example.bestiario_mhw.model.MonsterRepository.monsters
 import com.example.compose.Bestiario_mhwTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.example.bestiario_mhw.model.MonsterRepository
 
 
 class MainActivity : ComponentActivity() {
@@ -66,7 +68,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    BestiarioApp()
+                    BestiarioApp(monsters = MonsterRepository.monsters)
                 }
             }
         }
@@ -76,50 +78,44 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BestiarioApp() {
+fun BestiarioApp(monsters: List<Monster>) {
     Scaffold(
         topBar = {
             BestiarioTopAppBar()
         }
-    ) { it ->
-        LazyColumn(contentPadding = it) {
-            items(monsters) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Column(
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .padding(horizontal = 16.dp)
-                        ) {
-                    MonsterCard(
-                        monster = it,
-                        modifier = Modifier
+    ) {
+        BestiarioCapitulos(monsters)
+    }
+}
 
-                    )
-                }
-            }
+@Composable
+private fun BestiarioCapitulos(monsters: List<Monster>) {
+    LazyColumn {
+        items(monsters) { monster ->
+            Spacer(modifier = Modifier.height(8.dp))
+            MonsterCard(
+                monster = monster,
+                modifier = Modifier.fillParentMaxWidth().padding(horizontal = 16.dp)
+            )
         }
     }
 }
 
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BestiarioTopAppBar(modifier: Modifier = Modifier){
-    CenterAlignedTopAppBar(//modifier.size(R.dimen.size_alto_barra),
-
+    CenterAlignedTopAppBar(
         title = {
             Row(modifier
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
-
             ) {
                 Text(
                     text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.displayLarge
                 )
-                //Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.width(24.dp))
                 Image(
                     modifier = Modifier
                         .size(80.dp),
@@ -137,7 +133,7 @@ fun MonsterCard(
     monster: Monster,
     modifier: Modifier
 ){
-    var expanded by remember { mutableStateOf(true) }
+    var expanded by remember { mutableStateOf(false) }
     val color by animateColorAsState(
         targetValue = if (expanded) MaterialTheme.colorScheme.tertiaryContainer
         else MaterialTheme.colorScheme.primaryContainer,
@@ -145,14 +141,17 @@ fun MonsterCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-
     ) {
         Column(
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
-                .background(color = color),
-
-
+                .background(color = color)
+                .animateContentSize(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioHighBouncy,
+                        stiffness = Spring.StiffnessMedium
+                    )
+                ),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row (
@@ -171,7 +170,8 @@ fun MonsterCard(
             if (expanded){
                 infoOculta(
                     monster = monster,
-                    modifier = Modifier.padding(
+                    modifier = Modifier
+                        .padding(
                         start = dimensionResource(R.dimen.padding_medium),
                         top = dimensionResource(R.dimen.padding_small),
                         end = dimensionResource(R.dimen.padding_medium),
@@ -193,7 +193,6 @@ fun InfoBase(monster: Monster) {
             style = MaterialTheme.typography.displayMedium,
 
         )
-
         Text(
             text = LocalContext.current.getString(monster.tipo),
             style = MaterialTheme.typography.bodyLarge,
@@ -204,14 +203,12 @@ fun InfoBase(monster: Monster) {
 @Composable
 fun MonsterImage(@DrawableRes imageResId: Int) {
     Image(
-
         painter = painterResource(id = imageResId),
         contentDescription = null,
         modifier = Modifier
-            .width(dimensionResource(R.dimen.image_size))
-            //.padding(dimensionResource(R.dimen.padding_small))
+            .fillMaxWidth()
+            .aspectRatio(1.5f)
             .clip(MaterialTheme.shapes.large)
-
     )
 }
 
@@ -223,12 +220,9 @@ fun MonsterAvatar(@DrawableRes avatarResourceId: Int
         painter = painterResource(id = avatarResourceId),
         contentDescription = null,
         modifier = Modifier
-            //.padding(8.dp)
-
             .size(dimensionResource(R.dimen.size_minimum))
             .padding(dimensionResource(R.dimen.padding_small))
             .clip(MaterialTheme.shapes.small),
-
     )
 }
 
@@ -241,7 +235,6 @@ fun monsterDescription(
         modifier = modifier
             .padding(16.dp)
     ){
-
         Text(
             text = stringResource(R.string.Descripcion),
             style = MaterialTheme.typography.labelSmall
@@ -251,12 +244,10 @@ fun monsterDescription(
             style = MaterialTheme.typography.bodyLarge
         )
     }
-
 }
 
 @Composable
 private fun botonMostrarMas(
-
     expanded: Boolean,
     onClick:() -> Unit,
     modifier: Modifier = Modifier
@@ -278,20 +269,10 @@ fun infoOculta(
     monster: Monster,
     modifier: Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(true) }
-    val color by animateColorAsState(
-        targetValue = if (expanded) MaterialTheme.colorScheme.tertiaryContainer
-        else MaterialTheme.colorScheme.primaryContainer
-    )
-
     Column (
         modifier = modifier
-            .animateContentSize(
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioHighBouncy,
-                    stiffness = Spring.StiffnessMedium
-                )
-            )
+
+
     ) {
         MonsterImage(monster.imageResourceId)
         monsterDescription(monster.descripcion)
@@ -302,7 +283,7 @@ fun infoOculta(
 @Composable
 fun BestiarioAppPreview() {
     Bestiario_mhwTheme(useDarkTheme = false) {
-        BestiarioApp()
+        BestiarioApp(monsters = MonsterRepository.monsters)
     }
 }
 
@@ -310,7 +291,7 @@ fun BestiarioAppPreview() {
 @Composable
 fun BestiariodARKAppPreview() {
     Bestiario_mhwTheme(useDarkTheme = true) {
-        BestiarioApp()
+        BestiarioApp(monsters = MonsterRepository.monsters)
     }
 }
 
