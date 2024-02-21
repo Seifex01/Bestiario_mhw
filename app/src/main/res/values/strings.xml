@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Bestiario</string>
+    <string name="Descripcion">Descripción</string>
+    <string name="expand_button_content_description">Botón: Mostrar Más</string>
+    <string name="tipo_volador">Wyvern Volador</string>
+    <string name="tipo_nadador">Wyvern Nadador</string>
+    <string name="tipo_anciano">Dragón Anciano</string>
+
+    <string name="Rathian">Rathian</string>
+    <string name="Rathian_Descripcion">Wyverns conocidas como "reinas de la tierra". Depredadoras terrestres que dominan a sus presas con su cola venenosa y poderosas patas.</string>
+
+    <string name="Diablos">Diablos</string>
+    <string name="Diablos_Descripcion">El mayor depredador del Yermo de Agujas. Una bestia amenazadora y muy territorial, que se esconde bajo la tierra. Los ruidos fuertes lo hacen salir en busca de presas a las que arrastrar bajo las arenas.</string>
+
+    <string name="Tigrex">Tigrex</string>
+    <string name="Tigrex_Descripcion">Un wyvern volador salido de la prehistoria, de rugido bestial y patas musculosas que le permiten cargar de forma impresionante.</string>
+
+    <string name="Beotodus">Beotodus</string>
+    <string name="Beotodus_Descripcion">Un wyvern nadador que usa su afilada cresta para cortar el terreno congelado, nadando así libremente por la nieve. Se le puede ver a menudo cubriendo de nieve a sus presas usando las aletas de sus patas.</string>
+
+    <string name="Teostra">Teostra</string>
+    <string name="Teostra_Descripcion">Dragones ancianos de gran brutalidad, siempre envueltos en llamas y escupiendo fuego puro. Debido a la fiereza y letalidad de los Teostra el gremio estudia con detalle sus movimientos.</string>
+
+    <string name="Kushala">Kushala Daora</string>
+    <string name="Kushala_Descripcion">Un dragón anciano envuelto en torbellinos de viento que dificultan acercarse a él. Tiene la piel recubierta de duras escamas metálicas.</string>
+
+    <string name="Velkhana">Velkhana</string>
+    <string name="Velkhana_Descripcion">Un dragón anciano que congela todo lo que encuentra. Según la leyenda, puede controlar el frío y utilizar su aliento helado para crear agujas de hielo de la nada.</string>
+
+    <string name="Xeno">Xeno-jiiva</string>
+    <string name="Xeno_Descripcion">Nueva especie descubierta en las profundidades del Lecho de los Ancianos. Ni su relación con los otros dragones ancianos ni su ecología están claras.</string>
+
+    <string name="Shara">Shara Ishvalda</string>
+    <string name="Shara_Descripcion">Misterioso dragón anciano capaz de manipular a la tierra misma. El vibrar de sus alas remodela la tierra, lo que hará que te caigas.</string>
+
+    <string name="Nergigante">Nergigante</string>
+    <string name="Nergigante_Descripcion">Un terrible dragón anciano que aparece cuando hay otros dragones ancianos en las cercanías. Se ha documentado ampliamente su pasión por la destrucción.</string>
+
+</resources>
